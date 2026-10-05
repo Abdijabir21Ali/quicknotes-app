@@ -1,6 +1,6 @@
 /* ============================================================
    QuickNotes - script.js
-   Task 3: Add and display notes
+   Task 4: Validation and delete
    ============================================================ */
 
 /* ---------- Element selections ---------- */
@@ -14,9 +14,11 @@ const errorMessage = document.querySelector("#error-message");
 /* ---------- State ---------- */
 const notes = [];
 
+/* ---------- Constants ---------- */
+const MAX_LENGTH = 200; // NEW
+
 /* ---------- Helpers ---------- */
 
-// Readable date and time, e.g. "5 Oct 2025, 14:32"
 function formatDate(date) {
     return date.toLocaleString("en-GB", {
         day:   "numeric",
@@ -27,12 +29,10 @@ function formatDate(date) {
     });
 }
 
-// Generate a simple unique id
 function generateId() {
     return Date.now().toString() + "-" + Math.random().toString(36).slice(2, 8);
 }
 
-// Map a category name to its CSS class
 function categoryClass(category) {
     return "category-" + category.toLowerCase();
 }
@@ -40,21 +40,17 @@ function categoryClass(category) {
 /* ---------- Render ---------- */
 
 function render() {
-    // 1. Clear the list
     notesList.textContent = "";
 
-    // 2. Rebuild every note card
     notes.forEach(function (note) {
         const li = document.createElement("li");
         li.className = "note-card " + categoryClass(note.category);
         li.dataset.id = note.id;
 
-        // Note text
         const p = document.createElement("p");
         p.className = "note-text";
         p.textContent = note.text;
 
-        // Meta row (category label + date)
         const meta = document.createElement("div");
         meta.className = "note-meta";
 
@@ -69,13 +65,15 @@ function render() {
         meta.appendChild(categoryLabel);
         meta.appendChild(dateLabel);
 
-        // Delete button (wired in Task 4)
+        // Delete button — now wired up (Task 4)
         const deleteBtn = document.createElement("button");
         deleteBtn.type = "button";
         deleteBtn.className = "delete-btn";
         deleteBtn.textContent = "Delete";
+        deleteBtn.addEventListener("click", function () {
+            deleteNote(note.id);
+        });
 
-        // Assemble card
         li.appendChild(p);
         li.appendChild(meta);
         li.appendChild(deleteBtn);
@@ -83,7 +81,6 @@ function render() {
         notesList.appendChild(li);
     });
 
-    // 3. Update the count paragraph
     updateCount();
 }
 
@@ -100,6 +97,18 @@ function updateCount() {
     }
 }
 
+/* ---------- Validation (Task 4) ---------- */
+
+function validateNote(text) {
+    if (text === "") {
+        return "Please type a note first.";
+    }
+    if (text.length > MAX_LENGTH) {
+        return "Notes must be 200 characters or fewer.";
+    }
+    return ""; // no error
+}
+
 /* ---------- Add note ---------- */
 
 noteForm.addEventListener("submit", function (event) {
@@ -108,10 +117,15 @@ noteForm.addEventListener("submit", function (event) {
     const text     = noteInput.value.trim();
     const category = noteCategory.value;
 
-    // Temporary guard — full validation arrives in Task 4
-    if (text === "") {
+    // Validate
+    const error = validateNote(text);
+    if (error) {
+        errorMessage.textContent = error;
         return;
     }
+
+    // Clear any previous error
+    errorMessage.textContent = "";
 
     const newNote = {
         id:        generateId(),
@@ -122,15 +136,24 @@ noteForm.addEventListener("submit", function (event) {
 
     notes.push(newNote);
 
-    // Clear the input
     noteInput.value = "";
     noteInput.focus();
 
-    // Clear the error paragraph
-    errorMessage.textContent = "";
-
     render();
 });
+
+/* ---------- Delete note (Task 4) ---------- */
+
+function deleteNote(id) {
+    const index = notes.findIndex(function (note) {
+        return note.id === id;
+    });
+
+    if (index !== -1) {
+        notes.splice(index, 1);
+        render();
+    }
+}
 
 /* ---------- Initial render ---------- */
 render();
