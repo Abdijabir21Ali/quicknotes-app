@@ -1,0 +1,294 @@
+
+
+/* ---------- Global reset ---------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* ---------- Body ---------- */
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background-color: #f4f6f8;
+    color: #222;
+    line-height: 1.5;
+}
+
+/* ---------- Header ---------- */
+header {
+    background-color: #2a6f97;
+    color: #fff;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    letter-spacing: 0.5px;
+}
+
+header .tagline {
+    margin: 0.25rem 0 0;
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+/* ---------- Main column ---------- */
+main {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* ---------- Section cards ---------- */
+section {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+section h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    color: #2a6f97;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 0.5rem;
+}
+
+/* ---------- Form (Flexbox) ---------- */
+#note-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: flex-end;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 180px;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: #444;
+}
+
+#note-input,
+#note-category {
+    padding: 0.6rem 0.75rem;
+    font-size: 1rem;
+    font-family: inherit;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    background-color: #fff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#note-input:focus,
+#note-category:focus {
+    outline: none;
+    border-color: #2a6f97;
+    box-shadow: 0 0 0 3px rgba(42, 111, 151, 0.15);
+}
+
+/* ---------- Buttons ---------- */
+button {
+    padding: 0.6rem 1.1rem;
+    font-size: 1rem;
+    font-family: inherit;
+    font-weight: 600;
+    color: #fff;
+    background-color: #2a6f97;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+    background-color: #1d5578;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* ---------- Error message ---------- */
+#error-message {
+    color: #c0392b;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0.75rem 0 0;
+    min-height: 1.2em; /* prevents layout jump */
+}
+
+/* ---------- Search box ---------- */
+#search-input {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    font-size: 1rem;
+    font-family: inherit;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    margin-bottom: 0.75rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#search-input:focus {
+    outline: none;
+    border-color: #2a6f97;
+    box-shadow: 0 0 0 3px rgba(42, 111, 151, 0.15);
+}
+
+/* ---------- Note count ---------- */
+#note-count {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0 0 0.75rem;
+}
+
+/* ---------- Notes list ---------- */
+#notes-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* ---------- Note cards ---------- */
+.note-card {
+    padding: 0.9rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-left: 6px solid #cbd5e0; /* default; overridden by category classes */
+    border-radius: 8px;
+    margin: 0;
+    background-color: #fafbfc;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: box-shadow 0.2s ease;
+}
+
+.note-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.note-text {
+    margin: 0;
+    font-size: 1rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.note-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #666;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.note-category-label {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.75rem;
+}
+
+.note-date {
+    font-style: italic;
+}
+
+/* ---------- Delete button on cards ---------- */
+.delete-btn {
+    align-self: flex-start;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.85rem;
+    background-color: #e74c3c;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}
+
+/* ---------- Category-specific left-border colours ---------- */
+.category-personal {
+    border-left-color: #16a085; /* teal */
+}
+
+.category-personal .note-category-label {
+    color: #16a085;
+}
+
+.category-work {
+    border-left-color: #8b1e1e; /* dark red */
+}
+
+.category-work .note-category-label {
+    color: #8b1e1e;
+}
+
+.category-study {
+    border-left-color: #2980b9; /* blue */
+}
+
+.category-study .note-category-label {
+    color: #2980b9;
+}
+
+/* ---------- Footer ---------- */
+footer {
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.85rem;
+    color: #666;
+    background-color: #eef2f5;
+    border-top: 1px solid #dde3e8;
+    margin-top: 2rem;
+}
+
+/* ---------- Small screens (≤ 600px) ---------- */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.4rem;
+    }
+
+    main {
+        margin: 1rem auto;
+        padding: 0 0.75rem;
+    }
+
+    section {
+        padding: 1rem;
+    }
+
+    /* Stack form controls vertically */
+    #note-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-group {
+        flex: 1 1 auto;
+    }
+
+    #note-form button {
+        width: 100%;
+    }
+}
