@@ -292,3 +292,12 @@ footer {
         width: 100%;
     }
 }
+
+#clear-all-btn {
+    background-color: #8b1e1e;
+    margin-bottom: 0.75rem;
+}
+
+#clear-all-btn:hover {
+    background-color: #6b1616;
+}

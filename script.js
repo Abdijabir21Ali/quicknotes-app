@@ -11,6 +11,7 @@ const notesList    = document.querySelector("#notes-list");
 const noteCount    = document.querySelector("#note-count");
 const errorMessage = document.querySelector("#error-message");
 const searchInput  = document.querySelector("#search-input"); // NEW
+const clearAllBtn = document.querySelector("#clear-all-btn");
 
 /* ---------- Constants ---------- */
 const MAX_LENGTH = 200;
@@ -206,6 +207,17 @@ function deleteNote(id) {
 /* ---------- Search input listener (Task 5) ---------- */
 
 searchInput.addEventListener("input", function () {
+    render();
+});
+
+/* ---------- Bonus: Clear all ---------- */
+clearAllBtn.addEventListener("click", function () {
+    if (notes.length === 0) return; // nothing to clear
+    const confirmed = confirm("Delete all notes?");
+    if (!confirmed) return;
+
+    notes.length = 0;  // empty the array in place
+    saveNotes();
     render();
 });
 
